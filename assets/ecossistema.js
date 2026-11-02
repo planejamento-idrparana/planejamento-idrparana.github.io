@@ -28,6 +28,10 @@ window.ECOSSISTEMA = [
         nome: 'Rede Paranaense de ATER', url: 'https://rededeaterparana.github.io', tag: 'Rede estadual',
         descricao: 'Rede de entidades de Assistência Técnica e Extensão Rural do Paraná, com cadastro de adesão e mapa da capacidade instalada.',
       },
+      {
+        nome: 'Arranjos Regionais 2027', url: 'https://arranjos-regionais-idr.github.io', tag: 'Acesso restrito',
+        descricao: 'Montagem dos arranjos regionais de 2027: cada regional combina cadeias produtivas, áreas transversais, público, municípios e equipe, com acesso por código da DEPLAN.',
+      },
     ],
   },
   {
