@@ -23,7 +23,12 @@ window.ECOSSISTEMA = [
   {
     id: 'planejamento', titulo: 'Planejamento',
     sub: 'Programas, metas e instrumentos de gestão estratégica.',
-    itens: [],
+    itens: [
+      {
+        nome: 'Rede Paranaense de ATER', url: 'https://rededeaterparana.github.io', tag: 'Rede estadual',
+        descricao: 'Rede de entidades de Assistência Técnica e Extensão Rural do Paraná, com cadastro de adesão e mapa da capacidade instalada.',
+      },
+    ],
   },
   {
     id: 'ferramentas', titulo: 'Ferramentas e Instrumentos Técnicos',
