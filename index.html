@@ -4,71 +4,107 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DEPLAN · IDR-Paraná</title>
-<meta name="description" content="Ecossistema de dados, painéis e publicações do Departamento de Planejamento do IDR-Paraná.">
+<meta name="description" content="Realidade rural, monitoramento, planejamento e ferramentas técnicas do Departamento de Planejamento do IDR-Paraná.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* Paleta extraída da marca oficial IDR-Paraná (logo horizontal) */
 :root{
-  --bg:#f6f4ee; --ink:#14231b; --muted:#5b6b61; --line:#d9d5c8;
-  --land:#e7eadf; --dot:#2f6b4a; --accent:#c8862a; --card:#fffdf8;
+  --bg:#f6f9f7; --ink:#2b373e; --muted:#5d6b73; --line:#dbe5e0; --card:#ffffff;
+  --land:#e6f2ea; --green:#009857; --green2:#2fad56; --blue:#0478bc; --blue2:#0163ad;
+  --dot:var(--green); --accent:var(--blue);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0e1612; --ink:#e9efe9; --muted:#9aaba0; --line:#25332b;
-    --land:#15211b; --dot:#6fbf8e; --accent:#e3a548; --card:#131e18;
+    --bg:#0c1915; --ink:#e7efeb; --muted:#9fb1a9; --line:#22362e; --card:#11231d;
+    --land:#11251e; --green:#2fad56; --green2:#5cc77a; --blue:#3aa0e0; --blue2:#1f86c9;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0e1612; --ink:#e9efe9; --muted:#9aaba0; --line:#25332b;
-  --land:#15211b; --dot:#6fbf8e; --accent:#e3a548; --card:#131e18;
+  --bg:#0c1915; --ink:#e7efeb; --muted:#9fb1a9; --line:#22362e; --card:#11231d;
+  --land:#11251e; --green:#2fad56; --green2:#5cc77a; --blue:#3aa0e0; --blue2:#1f86c9;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif}
 a{color:inherit}
+h1,h2,h3{font-family:Montserrat,Inter,sans-serif}
 .wrap{max-width:72rem;margin:0 auto;padding:0 16px}
-header.top{display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-weight:600;letter-spacing:.02em}
-header.top nav a{margin-left:1.25rem;text-decoration:none;color:var(--muted);font-weight:500}
-header.top nav a:hover{color:var(--ink)}
 
-.hero{display:grid;grid-template-columns:1fr 1.25fr;gap:2rem;align-items:center;min-height:calc(100svh - 72px)}
-.kicker{color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
-h1{font-family:Fraunces,Georgia,serif;font-weight:700;font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;margin:.4rem 0 1rem}
-.lead{color:var(--muted);font-size:1.1rem;max-width:32rem}
-.count{font-family:Fraunces,Georgia,serif;font-size:clamp(3rem,6vw,5rem);line-height:1;color:var(--dot);margin-top:2rem}
-.count small{display:block;font-family:Inter,sans-serif;font-size:.9rem;color:var(--muted);letter-spacing:.04em}
+/* filete azul/verde, assinatura do logo */
+.rule{display:flex;gap:6px;height:5px;width:9rem;margin:1.1rem 0 1.4rem}
+.rule::before{content:"";flex:7;background:var(--blue);transform:skewX(-35deg)}
+.rule::after{content:"";flex:3;background:var(--green);transform:skewX(-35deg)}
+
+header.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:18px 0}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.brand img{height:44px;width:auto;display:block;padding:4px 8px;border-radius:8px;background:#fff}
+.brand span{font-family:Montserrat,sans-serif;font-weight:800;letter-spacing:.08em;color:var(--green);border-left:2px solid var(--line);padding-left:14px}
+header.top nav a{margin-left:1.1rem;text-decoration:none;color:var(--muted);font-weight:500;font-size:.92rem}
+header.top nav a:hover{color:var(--green)}
+
+.hero{display:grid;grid-template-columns:1fr 1.25fr;gap:2rem;align-items:center;min-height:min(calc(100svh - 80px),46rem);padding-top:2rem}
+.kicker{color:var(--blue);font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:.78rem}
+h1{font-weight:800;font-size:clamp(2.3rem,4.8vw,4rem);line-height:1.05;margin:.5rem 0 0;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--green)}
+.lead{color:var(--muted);font-size:1.08rem;max-width:32rem;margin:0}
+.count{font-family:Montserrat,sans-serif;font-weight:800;font-size:clamp(3rem,6vw,4.6rem);line-height:1;color:var(--green);margin-top:2rem}
+.count small{display:block;font-family:Inter,sans-serif;font-weight:500;font-size:.9rem;color:var(--muted);letter-spacing:.04em;margin-top:.3rem}
 
 .map{position:relative}
 .map svg{width:100%;height:auto;display:block;overflow:visible}
-#outline{fill:var(--land);stroke:var(--dot);stroke-width:1.5;stroke-linejoin:round}
+#outline{fill:var(--land);stroke:var(--green);stroke-width:1.5;stroke-linejoin:round}
+#sol{opacity:.9}
+.sol-on{animation:nasce 2.4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes nasce{from{transform:translateY(160px);opacity:0}to{transform:none;opacity:.9}}
 .mun{fill:var(--dot);opacity:0;transform-box:fill-box;transform-origin:center}
 .mun.on{animation:pop .5s ease-out forwards}
-.mun:hover{fill:var(--accent)}
+.mun:hover{fill:var(--blue)}
 @keyframes pop{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.8)}100%{opacity:.85;transform:scale(1)}}
 #tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:.8rem;padding:2px 8px;border-radius:4px;white-space:nowrap;opacity:0;transform:translate(-50%,-140%);transition:opacity .15s}
 
-section.eco{padding:5rem 0;border-top:1px solid var(--line)}
-section.eco h2{font-family:Fraunces,Georgia,serif;font-size:2rem;margin:0 0 .25rem}
+/* faixa da sede: foto autoral em duotone verde/azul; sem foto, fica o gradiente */
+.sede{position:relative;margin:2rem 0 0;border-radius:20px;overflow:hidden;min-height:22rem;display:flex;align-items:flex-end;color:#fff;
+  background:
+    linear-gradient(115deg,rgba(1,99,173,.88) 0%,rgba(0,152,87,.78) 60%,rgba(47,173,86,.55) 100%),
+    url("assets/sede-idr.jpg") center/cover no-repeat,
+    linear-gradient(115deg,#0163ad,#009857 60%,#2fad56);
+  background-blend-mode:multiply,luminosity,normal}
+.sede::after{content:"";position:absolute;right:-6rem;top:-6rem;width:22rem;height:22rem;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#2b9be0,#0163ad 70%);opacity:.35}
+.sede .txt{position:relative;z-index:1;padding:2.5rem;max-width:40rem}
+.sede h2{margin:0;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800}
+.sede p{margin:.6rem 0 0;opacity:.92}
+.sede figcaption{position:absolute;z-index:1;right:1rem;bottom:.8rem;font-size:.72rem;opacity:.75}
+
+section.eco{padding:4.5rem 0;border-top:1px solid var(--line)}
+section.eco h2{font-size:1.9rem;font-weight:800;margin:0}
+section.eco .rule{margin:.8rem 0 .6rem;width:6rem;height:4px}
 section.eco p.sub{color:var(--muted);margin:0 0 2rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(16rem,1fr));gap:1rem}
-.card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.25rem;transition:transform .2s,border-color .2s}
-.card:hover{transform:translateY(-3px);border-color:var(--dot)}
-.card h3{margin:0 0 .35rem;font-size:1.05rem}
+.card{position:relative;display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.3rem 1.2rem;transition:transform .2s,border-color .2s,box-shadow .2s;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--blue),var(--green))}
+.card:hover{transform:translateY(-3px);border-color:var(--green);box-shadow:0 10px 24px -14px rgba(0,152,87,.45)}
+.card h3{margin:0 0 .35rem;font-size:1.05rem;font-weight:700}
 .card p{margin:0;color:var(--muted);font-size:.92rem}
-.card .tag{display:inline-block;margin-top:.8rem;font-size:.75rem;color:var(--accent);font-weight:600}
+.card .tag{display:inline-block;margin-top:.9rem;font-size:.72rem;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 .empty{color:var(--muted);font-style:italic}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
 .reveal.in{opacity:1;transform:none}
 
-footer{padding:3rem 0;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+footer{margin-top:2rem;background:var(--green);color:#fff}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;justify-content:space-between;padding-top:1.6rem;padding-bottom:1.6rem;font-size:.88rem}
+footer a{color:#fff}
 
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;min-height:auto;padding:1rem 0 3rem}
   .map{order:-1}
   header.top nav{display:none}
+  .brand img{height:36px}
+  .sede .txt{padding:1.6rem}
 }
 @media (prefers-reduced-motion:reduce){
-  .mun{opacity:.85}.mun.on{animation:none}
+  .mun{opacity:.85}.mun.on,.sol-on{animation:none}
   .reveal{opacity:1;transform:none;transition:none}
   html{scroll-behavior:auto}
 }
@@ -77,7 +113,10 @@ footer{padding:3rem 0;color:var(--muted);font-size:.85rem;border-top:1px solid v
 <body>
 <div class="wrap">
   <header class="top">
-    <span>DEPLAN · IDR-Paraná</span>
+    <a class="brand" href="https://www.idrparana.pr.gov.br" target="_blank" rel="noopener">
+      <img src="assets/logo-idr.webp" alt="IDR-Paraná, Instituto de Desenvolvimento Rural do Paraná" width="158" height="45">
+      <span>DEPLAN</span>
+    </a>
     <nav id="nav"></nav>
   </header>
 
@@ -85,24 +124,46 @@ footer{padding:3rem 0;color:var(--muted);font-size:.85rem;border-top:1px solid v
     <section class="hero">
       <div>
         <div class="kicker">Departamento de Planejamento</div>
-        <h1>Do dado à decisão, em todo o Paraná.</h1>
+        <h1>Do dado à decisão, <em>em todo o Paraná.</em></h1>
+        <div class="rule"></div>
         <p class="lead">Realidade rural, monitoramento, planejamento e ferramentas técnicas do DEPLAN reunidos em um só lugar.</p>
         <div class="count"><span id="n">0</span><small>municípios atendidos</small></div>
       </div>
       <div class="map" aria-hidden="true">
-        <svg id="pr"><path id="outline"/></svg>
+        <svg id="pr">
+          <defs>
+            <radialGradient id="g-sol" cx="35%" cy="35%" r="70%">
+              <stop offset="0" stop-color="#2b9be0"/><stop offset="1" stop-color="#0163ad"/>
+            </radialGradient>
+          </defs>
+          <circle id="sol" cx="640" cy="20" r="110" fill="url(#g-sol)"/>
+          <path id="outline"/>
+        </svg>
         <div id="tip"></div>
       </div>
     </section>
+
+    <figure class="sede reveal" style="margin-left:0;margin-right:0">
+      <div class="txt">
+        <h2>Planejar com evidências.</h2>
+        <p>O DEPLAN organiza dados, indicadores e instrumentos que orientam as ações do IDR-Paraná nos 399 municípios do estado.</p>
+      </div>
+      <!-- ao adicionar assets/sede-idr.jpg (foto autoral), descomentar: <figcaption>Sede do IDR-Paraná · foto: Avner Paes Gomes</figcaption> -->
+    </figure>
+
     <div id="secoes"></div>
   </main>
-
-  <footer>
-    Departamento de Planejamento ·
-    <a href="https://www.idrparana.pr.gov.br" target="_blank" rel="noopener">IDR-Paraná</a> ·
-    <a href="https://www.agricultura.pr.gov.br" target="_blank" rel="noopener">SEAB</a>
-  </footer>
 </div>
+
+<footer>
+  <div class="wrap">
+    <span>Departamento de Planejamento · IDR-Paraná (IAPAR-EMATER)</span>
+    <span>
+      <a href="https://www.idrparana.pr.gov.br" target="_blank" rel="noopener">IDR-Paraná</a> ·
+      <a href="https://www.agricultura.pr.gov.br" target="_blank" rel="noopener">SEAB</a>
+    </span>
+  </div>
+</footer>
 
 <script src="assets/parana.js"></script>
 <script src="assets/ecossistema.js"></script>
@@ -114,6 +175,7 @@ footer{padding:3rem 0;color:var(--muted);font-size:.85rem;border-top:1px solid v
   svg.setAttribute('viewBox', `0 0 ${PR.w} ${PR.h}`);
   const outline = document.getElementById('outline');
   outline.setAttribute('d', PR.outline);
+  document.getElementById('sol').classList.add('sol-on');
 
   // contorno se desenha, depois os municípios acendem de oeste para leste
   if (!reduce) {
@@ -155,7 +217,7 @@ footer{padding:3rem 0;color:var(--muted);font-size:.85rem;border-top:1px solid v
           <h3>${esc(it.nome)}</h3><p>${esc(it.descricao)}</p>${it.tag ? `<span class="tag">${esc(it.tag)}</span>` : ''}</a>`).join('')
       : '<p class="empty">Conteúdo em curadoria.</p>';
     host.insertAdjacentHTML('beforeend', `<section class="eco" id="${esc(sec.id)}">
-      <h2 class="reveal">${esc(sec.titulo)}</h2><p class="sub reveal">${esc(sec.sub)}</p><div class="grid">${cards}</div></section>`);
+      <h2 class="reveal">${esc(sec.titulo)}</h2><div class="rule"></div><p class="sub reveal">${esc(sec.sub)}</p><div class="grid">${cards}</div></section>`);
   });
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
