@@ -123,6 +123,20 @@ def xeta(t: str) -> str:
     return t
 
 
+def getec(t: str) -> str:
+    # só totais por regional/programa; tiram-se nomes de tabelas do banco e a menção à conta
+    trocas = {
+        " com a conta do autor": "",
+        " (<code>tb_sap3_1</code>: equivalente técnico, extensionista, município e programa, por ano)": "",
+        " (<code>tb_pro</code>)": "",
+        "Assessoria de Planejamento": "Departamento de Planejamento",
+    }
+    for a, b in trocas.items():
+        t = t.replace(a, b)
+    assert "tb_" not in t and "conta do autor" not in t
+    return t
+
+
 RELATORIOS = {
     "leite-das-criancas.html": ("LC-CD/Relatorio_Leite_Criancas_IDR_v6_revisao.html", leite),
     "leite-das-criancas-safra-2025-26.html": ("LC-CD/Relatorio_Leite_Criancas_IDR_v6_safra_revisao.html", leite),
@@ -132,6 +146,8 @@ RELATORIOS = {
     "ater-idosos.html": ("Idosos/Relatorio_Idosos_ATER_IDR_padrao.html", None),
     "merenda-agricultura-familiar-caf.html": ("fundepar/Relatorio_Merenda_AF_CAF_IDR.html", None),
     "plantas-ornamentais.html": ("Plantas Ornamentais/Relatorio-Plantas-Ornamentais-Parana_padrao.html", plantas),
+    "getec-ater-2018-2026.html": ("asplan/Relatorio_GETEC_2018-2026.html", getec),
+    "getec-equivalente-tecnico-2018-2026.html": ("asplan/Equivalente_Tecnico_GETEC_2018-2026.html", getec),
     # Xetá: dados pessoais já tratados, mas o dossiê cita disputa fundiária e empresa;
     # só entra com aval da chefia
     # "herareka-xeta-paa-2026.html": ("Povos tradicionais/relatorio_herareka_xeta_PAA_2026.html", xeta),
@@ -160,7 +176,11 @@ def auditoria(nome: str, t: str) -> None:
 if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
     for destino, (origem, fn) in RELATORIOS.items():
-        t = (E / origem).read_text(encoding="utf-8")
+        src = E / origem
+        if not src.exists():
+            print(f"FALTA {destino:42} <- {src}")
+            continue
+        t = src.read_text(encoding="utf-8")
         t = fn(t) if fn else t
         t = t.replace("ASPLAN", "DEPLAN")  # a assessoria passou a departamento
         auditoria(destino, t)

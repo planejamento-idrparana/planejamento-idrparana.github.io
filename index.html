@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DEPLAN · IDR-Paraná</title>
-<meta name="description" content="Realidade rural, monitoramento, planejamento e ferramentas técnicas do Departamento de Planejamento do IDR-Paraná.">
+<meta name="description" content="Realidade rural, monitoramento, planejamento, ferramentas e gestão de ATER reunidos pelo Departamento de Planejamento do IDR-Paraná.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#009857">
@@ -54,7 +54,7 @@ header.top{display:flex;justify-content:space-between;align-items:center;gap:1re
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none}
 .brand img{height:44px;width:auto;display:block;padding:4px 8px;border-radius:8px;background:#fff}
 .brand span{font-family:Montserrat,sans-serif;font-weight:800;letter-spacing:.08em;color:var(--green);border-left:2px solid var(--line);padding-left:14px}
-header.top nav a{margin-left:1.1rem;text-decoration:none;color:var(--muted);font-weight:500;font-size:.92rem}
+header.top nav a{margin-left:1.1rem;white-space:nowrap;text-decoration:none;color:var(--muted);font-weight:500;font-size:.92rem}
 header.top nav a:hover{color:var(--green)}
 
 .hero{display:grid;grid-template-columns:1fr 1.25fr;gap:2rem;align-items:center;min-height:min(calc(100svh - 80px),46rem);padding-top:2rem}
@@ -103,6 +103,18 @@ section.eco p.sub{color:var(--muted);margin:0 0 2rem}
 .card p{margin:0;color:var(--muted);font-size:.92rem}
 .card .tag{display:inline-block;margin-top:.9rem;font-size:.72rem;color:var(--green);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
 .empty{color:var(--muted);font-style:italic}
+.card.breve{cursor:default}
+.card.breve:hover{transform:none;border-color:var(--line);box-shadow:none}
+.card.breve::before{background:var(--line)}
+.card.breve .tag{color:var(--muted)}
+section.eco h3.grupo{font-size:1.05rem;font-weight:700;color:var(--blue);margin:2rem 0 .8rem;padding-bottom:.4rem;border-bottom:1px solid var(--line)}
+section.eco h3.grupo:first-of-type{margin-top:0}
+/* fim de cada ambiente: volta ao mapa e atalhos para os outros */
+.salto{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:2.5rem;padding-top:1.2rem;border-top:1px dashed var(--line)}
+.salto a{font-size:.82rem;font-weight:600;text-decoration:none;padding:.35rem .8rem;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted)}
+.salto a:hover{color:var(--green);border-color:var(--green)}
+.salto a.mapa{background:var(--green);border-color:var(--green);color:#fff}
+.salto a.mapa:hover{background:var(--blue);border-color:var(--blue);color:#fff}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
 .reveal.in{opacity:1;transform:none}
 
@@ -135,12 +147,12 @@ footer a{color:#fff}
   </header>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="topo">
       <div>
         <div class="kicker">Departamento de Planejamento</div>
         <h1>Do dado à decisão, <em>em todo o Paraná.</em></h1>
         <div class="rule"></div>
-        <p class="lead">Realidade rural, monitoramento, planejamento e ferramentas técnicas do DEPLAN reunidos em um só lugar.</p>
+        <p class="lead">Realidade rural, monitoramento, planejamento e ferramentas técnicas reunidos em um só lugar.</p>
         <div class="count"><span id="n">0</span><small>municípios atendidos</small></div>
       </div>
       <div class="map" aria-hidden="true">
@@ -224,14 +236,25 @@ footer a{color:#fff}
   // seções do ecossistema a partir de assets/ecossistema.js
   const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   const host = document.getElementById('secoes'), nav = document.getElementById('nav');
+  const card = it => {
+    const corpo = `<h3>${esc(it.nome)}</h3>${it.descricao ? `<p>${esc(it.descricao)}</p>` : ''}`;
+    return it.url
+      ? `<a class="card reveal" href="${esc(it.url)}" target="_blank" rel="noopener">${corpo}${it.tag ? `<span class="tag">${esc(it.tag)}</span>` : ''}</a>`
+      : `<div class="card breve reveal">${corpo}<span class="tag">${esc(it.tag ? it.tag + ' · em breve' : 'Em breve')}</span></div>`;
+  };
+  const grade = itens => itens.length
+    ? `<div class="grid">${itens.map(card).join('')}</div>`
+    : '<p class="empty">Conteúdo em curadoria.</p>';
   ECOSSISTEMA.forEach(sec => {
-    nav.insertAdjacentHTML('beforeend', `<a href="#${esc(sec.id)}">${esc(sec.titulo)}</a>`);
-    const cards = sec.itens.length
-      ? sec.itens.map(it => `<a class="card reveal" href="${esc(it.url)}" target="_blank" rel="noopener">
-          <h3>${esc(it.nome)}</h3><p>${esc(it.descricao)}</p>${it.tag ? `<span class="tag">${esc(it.tag)}</span>` : ''}</a>`).join('')
-      : '<p class="empty">Conteúdo em curadoria.</p>';
+    nav.insertAdjacentHTML('beforeend', `<a href="#${esc(sec.id)}">${esc(sec.menu || sec.titulo)}</a>`);
+    const corpo = sec.grupos
+      ? sec.grupos.map(g => `<h3 class="grupo reveal">${esc(g.titulo)}</h3>${grade(g.itens)}`).join('')
+      : grade(sec.itens);
+    const outros = ECOSSISTEMA.filter(o => o.id !== sec.id)
+      .map(o => `<a href="#${esc(o.id)}">${esc(o.titulo)}</a>`).join('');
     host.insertAdjacentHTML('beforeend', `<section class="eco" id="${esc(sec.id)}">
-      <h2 class="reveal">${esc(sec.titulo)}</h2><div class="rule"></div><p class="sub reveal">${esc(sec.sub)}</p><div class="grid">${cards}</div></section>`);
+      <h2 class="reveal">${esc(sec.titulo)}</h2><div class="rule"></div><p class="sub reveal">${esc(sec.sub)}</p>${corpo}
+      <nav class="salto" aria-label="Outros ambientes"><a class="mapa" href="#topo">↑ Voltar ao mapa</a>${outros}</nav></section>`);
   });
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
