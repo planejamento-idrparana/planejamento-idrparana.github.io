@@ -162,6 +162,7 @@ if __name__ == "__main__":
     for destino, (origem, fn) in RELATORIOS.items():
         t = (E / origem).read_text(encoding="utf-8")
         t = fn(t) if fn else t
+        t = t.replace("ASPLAN", "DEPLAN")  # a assessoria passou a departamento
         auditoria(destino, t)
         (OUT / destino).write_text(t, encoding="utf-8")
         print(f"ok  {destino:42} {len(t) // 1024:>6} KB  <- {origem}")
