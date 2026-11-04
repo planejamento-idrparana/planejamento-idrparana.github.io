@@ -30,6 +30,15 @@ window.ECOSSISTEMA = [
     // e, para os projetos, por erva-mate/scripts/getec/07_relatorio_publico.py
     grupos: [
       {
+        titulo: 'Prestação de contas',
+        itens: [
+          {
+            nome: 'Balanço Social IDR-Paraná 2025', url: 'https://balanco-social-idrparana.github.io/', tag: 'Balanço Social',
+            descricao: 'Relatório de impactos das ações e tecnologias do IDR-Paraná, com a metodologia Ambitec-Agro, como prestação de contas à sociedade paranaense.',
+          },
+        ],
+      },
+      {
         titulo: 'Programas e políticas públicas',
         itens: [
           {
