@@ -15,6 +15,10 @@ window.ECOSSISTEMA = [
         nome: 'DGP-Comando', url: 'https://dgp-comando.github.io', tag: 'Sala de Situação',
         descricao: 'Sala de Situação do Paraná: mapa e globo com mais de 80 camadas de dados dos 399 municípios.',
       },
+      {
+        nome: 'Programa Água Segura', url: 'https://aguasegura.github.io/mapainterativo/', tag: 'Mapa interativo',
+        descricao: 'Microbacias de abastecimento público do Paraná: 98 ottobacias, 44 mananciais e 22 regionais. Parceria IDR-Paraná e SANEPAR.',
+      },
       { nome: 'Painéis interativos Realidade Rural', tag: 'Painéis BI' },
       { nome: 'Mapas e indicadores territoriais', descricao: 'Recortes por município e regional para leitura do território rural.' },
     ],
