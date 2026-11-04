@@ -65,10 +65,27 @@ tbody tr:last-child td{border-bottom:0}
   h4+.tbl{break-before:avoid}
 }
 @page{size:A4 landscape;margin:12mm}
+
+/* capa com foto ilustrativa (tools/publicar_relatorios.py) */
+.mast-grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:44px;align-items:stretch}
+.mast-text{min-width:0}
+.mast-photo{margin:0;display:flex;flex-direction:column;min-width:0}
+.mast-photo img{width:100%;height:100%;min-height:270px;object-fit:cover;display:block;
+  border-radius:10px;border:1px solid var(--line,#ddd);background:var(--gray-l,#eee)}
+.mast-photo figcaption{font-size:11.5px;line-height:1.45;color:var(--mut,#666);margin-top:9px;
+  padding-left:11px;border-left:2px solid var(--green,#2e7d32)}
+.mast-photo figcaption a{color:inherit}
+@media(max-width:860px){
+  .mast-grid{grid-template-columns:1fr;gap:26px}
+  .mast-photo{order:-1}
+  .mast-photo img{min-height:0;aspect-ratio:16/9}
+}
 </style></head>
 <body><div class="wrap">
-<header><h1>Relatório GETEC · ATER no Paraná, 2018–2026</h1>
+<header>
+<div class="mast-grid"><div class="mast-text"><h1>Relatório GETEC · ATER no Paraná, 2018–2026</h1>
 <p class="sub">Produtores assistidos, produtores atendidos, métodos grupais e crédito rural, com abertura por regional, categoria e método</p>
+</div><figure class="mast-photo"><img src="img/getec-ater-2018-2026.jpg" alt="Assistência técnica a um produtor rural na horta" loading="eager"><figcaption>Foto ilustrativa: assistência técnica a um produtor rural na horta. <a href="https://commons.wikimedia.org/wiki/File:Assistência_técnica_(16077577977).jpg">Sergio Amaral/MDS</a>, CC BY-SA 2.0, via Wikimedia Commons.</figcaption></figure></div>
 <div class="meta">IDR-Paraná · Fonte: relatórios oficiais do GETEC/SISATER, gerados em 23/10/2026. *2026 parcial até essa data. Passe o mouse sobre as barras para ver os valores.</div></header>
 <ol class="toc"><li><a href="#destaques">1. Destaques</a></li><li><a href="#atendidos">2. Produtores atendidos</a></li><li><a href="#assistidos">3. Produtores assistidos</a></li><li><a href="#categorias">4. Público por categoria, mulheres e jovens</a></li><li><a href="#individuais">5. Métodos individuais</a></li><li><a href="#grupais">6. Métodos grupais</a></li><li><a href="#credito">7. Crédito rural</a></li><li><a href="#equipe">8. Equipe e produtividade</a></li><li><a href="#metodo">9. Fontes, método e qualidade dos dados</a></li></ol>
 <section id="destaques"><h2>1. Destaques</h2><div class="kpis"><div class="kpi"><div class="l">Produtores atendidos 2025</div><div class="v">130.930</div><div class="s">2026 até 23/10: 119.879</div></div><div class="kpi"><div class="l">Produtores assistidos 2025</div><div class="v">24.898</div><div class="s">2026 até 23/10: 29.025</div></div><div class="kpi"><div class="l">Métodos grupais 2025</div><div class="v">11.459</div><div class="s">277.728 participantes</div></div><div class="kpi"><div class="l">Crédito rural 2025</div><div class="v">R$ 274,7 mi</div><div class="s">10.017 projetos elaborados</div></div></div>

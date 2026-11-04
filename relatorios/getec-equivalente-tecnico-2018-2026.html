@@ -60,10 +60,27 @@ code{font-size:12.5px;background:var(--grid);padding:1px 4px;border-radius:4px}
 .foot{margin-top:40px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text2);text-align:center}
 @media print{:root{--bg:#fff;--surface:#fff}h2{break-before:page}section:first-of-type h2{break-before:auto}.card,.kpi{break-inside:avoid}h4{break-after:avoid}.heat .stick{position:static}}
 @page{size:A4 landscape;margin:10mm}
+
+/* capa com foto ilustrativa (tools/publicar_relatorios.py) */
+.mast-grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:44px;align-items:stretch}
+.mast-text{min-width:0}
+.mast-photo{margin:0;display:flex;flex-direction:column;min-width:0}
+.mast-photo img{width:100%;height:100%;min-height:270px;object-fit:cover;display:block;
+  border-radius:10px;border:1px solid var(--line,#ddd);background:var(--gray-l,#eee)}
+.mast-photo figcaption{font-size:11.5px;line-height:1.45;color:var(--mut,#666);margin-top:9px;
+  padding-left:11px;border-left:2px solid var(--green,#2e7d32)}
+.mast-photo figcaption a{color:inherit}
+@media(max-width:860px){
+  .mast-grid{grid-template-columns:1fr;gap:26px}
+  .mast-photo{order:-1}
+  .mast-photo img{min-height:0;aspect-ratio:16/9}
+}
 </style></head>
 <body><div class="wrap">
-<header><h1>Equivalente técnico · IDR-Paraná, 2018–2026</h1>
+<header>
+<div class="mast-grid"><div class="mast-text"><h1>Equivalente técnico · IDR-Paraná, 2018–2026</h1>
 <p class="sub">Força de trabalho em ATER: total, por regional, por programa e regional × programa</p>
+</div><figure class="mast-photo"><img src="img/getec-equivalente-tecnico-2018-2026.jpg" alt="Pesquisador avalia uma lavoura de batata" loading="eager"><figcaption>Foto ilustrativa: pesquisador avalia uma lavoura de batata. <a href="https://commons.wikimedia.org/wiki/File:Kartoffelforschung_gross.jpg">Bruce Fritz/USDA</a>, domínio público, via Wikimedia Commons.</figcaption></figure></div>
 <div class="meta">Fonte: planejamento anual do GETEC/SISATER (equivalente técnico por extensionista e programa), conferido com os relatórios oficiais. *2026 é o planejamento do ano em curso.</div></header>
 <ol class="toc"><li><a href="#total">1. Equivalente técnico total</a></li><li><a href="#regional">2. Por regional</a></li><li><a href="#programa">3. Por programa</a></li><li><a href="#cruzamento">4. Regional × programa</a></li><li><a href="#metodo">5. Fonte e método</a></li></ol>
 <section id="total"><h2>1. Equivalente técnico total</h2><div class="kpis"><div class="kpi"><div class="l">Equivalentes 2026</div><div class="v">641,84</div><div class="s">681 extensionistas com programação</div></div><div class="kpi"><div class="l">Equivalentes 2025</div><div class="v">553,44</div><div class="s">582 extensionistas</div></div><div class="kpi"><div class="l">Variação 2018–2025</div><div class="v">-18%</div><div class="s">675,64 → 553,44</div></div><div class="kpi"><div class="l">Pico da série</div><div class="v">740,78</div><div class="s">em 2019</div></div></div>

@@ -449,6 +449,21 @@ html{scroll-padding-top:150px}   /* âncoras/scrollIntoView não somem sob a bar
   border-radius:3px;padding:1px 5px;color:var(--azul-d)}
 @media(max-width:640px){.revbar{flex-direction:column;gap:8px}}
 @media print{.revbar{display:none}}
+
+/* capa com foto ilustrativa (tools/publicar_relatorios.py) */
+.mast-grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:44px;align-items:stretch}
+.mast-text{min-width:0}
+.mast-photo{margin:0;display:flex;flex-direction:column;min-width:0}
+.mast-photo img{width:100%;height:100%;min-height:270px;object-fit:cover;display:block;
+  border-radius:10px;border:1px solid var(--line,#ddd);background:var(--gray-l,#eee)}
+.mast-photo figcaption{font-size:11.5px;line-height:1.45;color:var(--mut,#666);margin-top:9px;
+  padding-left:11px;border-left:2px solid var(--green,#2e7d32)}
+.mast-photo figcaption a{color:inherit}
+@media(max-width:860px){
+  .mast-grid{grid-template-columns:1fr;gap:26px}
+  .mast-photo{order:-1}
+  .mast-photo img{min-height:0;aspect-ratio:16/9}
+}
 </style>
 <div class="grain"></div>
 <div class="wrap">
@@ -460,11 +475,13 @@ html{scroll-padding-top:150px}   /* âncoras/scrollIntoView não somem sob a bar
   <hr class="sigbar">
 
   <header class="masthead">
+<div class="mast-grid"><div class="mast-text">
     <div class="kicker">Recorte da safra 2025/26 &middot; Programas públicos e ATER — IDR-Paraná</div>
     <h1>Leite das Crianças <em>2026</em> e a assistência técnica do IDR-Paraná</h1>
     <p class="dek">Cobertura da assistência técnica e extensão rural (ATER) do IDR-Paraná junto aos
       produtores da agricultura familiar que fornecem leite ao Programa Leite das Crianças.</p>
-    <div class="meta">
+</div><figure class="mast-photo"><img src="img/leite-das-criancas-safra-2025-26.jpg" alt="Vacas leiteiras em pastagem" loading="eager"><figcaption>Foto ilustrativa: vacas leiteiras em pastagem. <a href="https://commons.wikimedia.org/wiki/File:Holstein_Cow_Grazing_01.jpg">Carolyn Parsons</a>, CC BY-SA 4.0, via Wikimedia Commons.</figcaption></figure></div>
+<div class="meta">
       <span><b id="m-prod"></b> produtores</span>
       <span><b id="m-lat"></b> laticínios</span>
       <span><b>23</b> Núcleos Regionais</span>

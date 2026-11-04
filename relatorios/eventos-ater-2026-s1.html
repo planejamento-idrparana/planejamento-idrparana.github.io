@@ -378,6 +378,21 @@ html{scroll-padding-top:150px}   /* âncoras/scrollIntoView não somem sob a bar
     border:1px solid var(--line);border-radius:10px;margin:10px 0 0}
 }
 
+
+/* capa com foto ilustrativa (tools/publicar_relatorios.py) */
+.mast-grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:44px;align-items:stretch}
+.mast-text{min-width:0}
+.mast-photo{margin:0;display:flex;flex-direction:column;min-width:0}
+.mast-photo img{width:100%;height:100%;min-height:270px;object-fit:cover;display:block;
+  border-radius:10px;border:1px solid var(--line,#ddd);background:var(--gray-l,#eee)}
+.mast-photo figcaption{font-size:11.5px;line-height:1.45;color:var(--mut,#666);margin-top:9px;
+  padding-left:11px;border-left:2px solid var(--green,#2e7d32)}
+.mast-photo figcaption a{color:inherit}
+@media(max-width:860px){
+  .mast-grid{grid-template-columns:1fr;gap:26px}
+  .mast-photo{order:-1}
+  .mast-photo img{min-height:0;aspect-ratio:16/9}
+}
 </style>
 
 <style>
@@ -427,12 +442,14 @@ html{scroll-padding-top:150px}   /* âncoras/scrollIntoView não somem sob a bar
   <hr class="sigbar">
 
   <header class="masthead">
+<div class="mast-grid"><div class="mast-text">
     <div class="kicker">Panorama conjuntural &middot; Eventos de ATER — IDR-Paraná</div>
     <h1>Eventos de extensão rural no <em>1º semestre de 2026</em></h1>
     <p class="dek">Panorama completo dos eventos de assistência técnica e extensão rural registrados
       pelo IDR-Paraná no sistema GETEC/SISATER entre 1º de janeiro e 30 de junho de 2026, lidos por
       método, programa, território, público e qualidade do registro.</p>
-    <div class="meta">
+</div><figure class="mast-photo"><img src="img/eventos-ater-2026-s1.jpg" alt="Extensionistas rurais em atividade com um grupo de apicultores" loading="eager"><figcaption>Foto ilustrativa: extensionistas rurais em atividade com um grupo de apicultores. <a href="https://commons.wikimedia.org/wiki/File:Ass_Tec.jpg">Sidineis</a>, CC BY-SA 4.0, via Wikimedia Commons.</figcaption></figure></div>
+<div class="meta">
       <span><b id="m-ev"></b> eventos</span>
       <span><b id="m-part"></b> participantes</span>
       <span><b id="m-hr"></b> de carga horária</span>

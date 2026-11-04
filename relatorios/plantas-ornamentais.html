@@ -235,6 +235,21 @@ footer p{max-width:90ch}
 .botao.vazio{background:#fff;color:var(--azul-esc);border:1px solid var(--borda)}
 @media print{nav.abas{display:none}section.bloco{display:block!important;page-break-before:always}}
 @media (max-width:640px){.envolucro{padding:0 15px}.kpi .val{font-size:22px}}
+
+/* capa com foto ilustrativa (tools/publicar_relatorios.py) */
+.mast-grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:44px;align-items:stretch}
+.mast-text{min-width:0}
+.mast-photo{margin:0;display:flex;flex-direction:column;min-width:0}
+.mast-photo img{width:100%;height:100%;min-height:270px;object-fit:cover;display:block;
+  border-radius:10px;border:1px solid var(--line,#ddd);background:var(--gray-l,#eee)}
+.mast-photo figcaption{font-size:11.5px;line-height:1.45;color:var(--mut,#666);margin-top:9px;
+  padding-left:11px;border-left:2px solid var(--green,#2e7d32)}
+.mast-photo figcaption a{color:inherit}
+@media(max-width:860px){
+  .mast-grid{grid-template-columns:1fr;gap:26px}
+  .mast-photo{order:-1}
+  .mast-photo img{min-height:0;aspect-ratio:16/9}
+}
 </style>
 
 <div class="grain"></div>
@@ -247,10 +262,12 @@ footer p{max-width:90ch}
   <hr class="sigbar">
 
   <header class="masthead">
+<div class="mast-grid"><div class="mast-text">
     <div class="kicker">Relatório situacional · Plantas ornamentais · <span id="carimbo-data"></span></div>
     <h1>Floresce <em>Paraná</em></h1>
     <p class="dek">Diagnóstico e estratégia para a cadeia de flores e plantas ornamentais do Paraná, reconstruído a partir de dados primários das bases públicas e corporativas do IDR-Paraná.</p>
-    <div class="meta-hdr">
+</div><figure class="mast-photo"><img src="img/plantas-ornamentais.jpg" alt="Cultivo de gérberas em estufa" loading="eager"><figcaption>Foto ilustrativa: cultivo de gérberas em estufa. <a href="https://commons.wikimedia.org/wiki/File:Gerbera_cultivation.JPG">Johann.rademeyer</a>, CC BY-SA 3.0, via Wikimedia Commons.</figcaption></figure></div>
+<div class="meta-hdr">
       <div><b>Base do estudo:</b> apresentação Plantas Ornamentais Paraná (L. G. Adamuchio, IDR-PR)</div>
       <div><b>Fontes primárias:</b> 6</div>
     </div>

@@ -137,6 +137,65 @@ def getec(t: str) -> str:
     return t
 
 
+# Foto ilustrativa da capa (relatorios/img/<destino sem .html>.jpg), para os relatórios que
+# não trazem foto própria. Todas do Wikimedia Commons; a licença exige autor e licença na legenda.
+COMMONS = "https://commons.wikimedia.org/wiki/File:"
+FOTOS = {
+    "leite-das-criancas.html": ("Vacas holandesas pastando em campo aberto.",
+        "Black-and-white_cows_in_a_open_field.jpg", "Tom Igodt", "CC BY 4.0"),
+    "leite-das-criancas-safra-2025-26.html": ("Vacas leiteiras em pastagem.",
+        "Holstein_Cow_Grazing_01.jpg", "Carolyn Parsons", "CC BY-SA 4.0"),
+    "compra-direta-2025-26.html": ("Caixas de tomate, pimentão e limão em feira de produtores orgânicos.",
+        "Fotorreportagem_Feira_do_produtor_orgânico_(41858846635).jpg", "Governo do Estado de São Paulo", "CC BY 2.0"),
+    "eventos-ater-2026-s1.html": ("Extensionistas rurais em atividade com um grupo de apicultores.",
+        "Ass_Tec.jpg", "Sidineis", "CC BY-SA 4.0"),
+    "agroecologia-organicos.html": ("Cultivo orgânico certificado de hortaliças no norte do Paraná.",
+        "Produção_orgânica_certificada_de_hortaliças.JPG", "Mussangui", "CC BY-SA 3.0"),
+    "ater-idosos.html": ("Agricultor idoso em um trator antigo, no campo.",
+        "Elderly_farmer_sits_on_vintage_tractor_in_sunny_countryside_field.jpg", "Shixart1985", "CC BY 2.0"),
+    "plantas-ornamentais.html": ("Cultivo de gérberas em estufa.",
+        "Gerbera_cultivation.JPG", "Johann.rademeyer", "CC BY-SA 3.0"),
+    "getec-ater-2018-2026.html": ("Assistência técnica a um produtor rural na horta.",
+        "Assistência_técnica_(16077577977).jpg", "Sergio Amaral/MDS", "CC BY-SA 2.0"),
+    "getec-equivalente-tecnico-2018-2026.html": ("Pesquisador avalia uma lavoura de batata.",
+        "Kartoffelforschung_gross.jpg", "Bruce Fritz/USDA", "domínio público"),
+}
+FOTO_CSS = """
+/* capa com foto ilustrativa (tools/publicar_relatorios.py) */
+.mast-grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:44px;align-items:stretch}
+.mast-text{min-width:0}
+.mast-photo{margin:0;display:flex;flex-direction:column;min-width:0}
+.mast-photo img{width:100%;height:100%;min-height:270px;object-fit:cover;display:block;
+  border-radius:10px;border:1px solid var(--line,#ddd);background:var(--gray-l,#eee)}
+.mast-photo figcaption{font-size:11.5px;line-height:1.45;color:var(--mut,#666);margin-top:9px;
+  padding-left:11px;border-left:2px solid var(--green,#2e7d32)}
+.mast-photo figcaption a{color:inherit}
+@media(max-width:860px){
+  .mast-grid{grid-template-columns:1fr;gap:26px}
+  .mast-photo{order:-1}
+  .mast-photo img{min-height:0;aspect-ratio:16/9}
+}
+"""
+
+
+def com_foto(nome: str, t: str) -> str:
+    """Põe a foto ilustrativa ao lado do título da capa. Idempotente."""
+    if nome not in FOTOS or 'class="mast-photo"' in t:
+        return t
+    alt, arq, autor, lic = FOTOS[nome]
+    m = re.search(r"<header[^>]*>", t)
+    fim = t.index('<div class="meta', m.end())
+    figura = (f'<figure class="mast-photo"><img src="img/{nome[:-5]}.jpg" alt="{alt[:-1]}" loading="eager">'
+              f'<figcaption>Foto ilustrativa: {alt[:-1].lower()[0]}{alt[1:-1]}. '
+              f'<a href="{COMMONS}{arq}">{autor}</a>, {lic}, via Wikimedia Commons.</figcaption></figure>')
+    t = (t[:m.end()] + '\n<div class="mast-grid"><div class="mast-text">' + t[m.end():fim].rstrip()
+         + "\n</div>" + figura + "</div>\n" + t[fim:])
+    if ".mast-photo img{" not in t:
+        i = t.index("</style>")
+        t = t[:i] + FOTO_CSS + t[i:]
+    return t
+
+
 RELATORIOS = {
     "leite-das-criancas.html": ("LC-CD/Relatorio_Leite_Criancas_IDR_v6_revisao.html", leite),
     "leite-das-criancas-safra-2025-26.html": ("LC-CD/Relatorio_Leite_Criancas_IDR_v6_safra_revisao.html", leite),
@@ -174,6 +233,13 @@ def auditoria(nome: str, t: str) -> None:
 
 
 if __name__ == "__main__":
+    import sys
+    if "--so-fotos" in sys.argv:  # aplica só a capa com foto nas versões já publicadas
+        for destino in FOTOS:
+            p = OUT / destino
+            p.write_text(com_foto(destino, p.read_text(encoding="utf-8")), encoding="utf-8")
+            print(f"foto {destino}")
+        sys.exit()
     OUT.mkdir(exist_ok=True)
     for destino, (origem, fn) in RELATORIOS.items():
         src = E / origem
@@ -183,6 +249,7 @@ if __name__ == "__main__":
         t = src.read_text(encoding="utf-8")
         t = fn(t) if fn else t
         t = t.replace("ASPLAN", "DEPLAN")  # a assessoria passou a departamento
+        t = com_foto(destino, t)
         auditoria(destino, t)
         (OUT / destino).write_text(t, encoding="utf-8")
         print(f"ok  {destino:42} {len(t) // 1024:>6} KB  <- {origem}")
