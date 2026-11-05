@@ -48,9 +48,13 @@ h1,h2,h3{font-family:Montserrat,Inter,sans-serif;margin:0}
   transition:clip-path 1.5s cubic-bezier(.7,0,.2,1),transform 1.5s cubic-bezier(.7,0,.2,1)}
 [data-step="1"] .hq img{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:none}
 
-/* vídeo em tela inteira: legendas ficam no rodapé, por isso a faixa do mar sai */
+/* o vídeo para acima da faixa do mar, onde ficam os botões de navegação */
 .filme{padding:0}
-#filme{position:absolute;inset:0;width:100%;height:100%;background:#000}
+#filme{position:absolute;left:0;top:0;width:100%;height:838px;background:#000}
+#nav{position:absolute;left:50%;bottom:9px;z-index:22;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:99px;background:rgba(10,24,32,.85)}
+#nav button{padding:6px 18px;border:0;border-radius:99px;background:#fff;color:#10202a;font:700 19px/1.2 Inter,sans-serif;cursor:pointer}
+#nav button:hover,#nav button:focus-visible{outline:3px solid var(--boia);outline-offset:1px}
+#nav span{min-width:74px;text-align:center;font:600 18px/1 Inter,sans-serif;font-variant-numeric:tabular-nums}
 
 /* ponte */
 .ponte{display:flex;flex-direction:column;justify-content:center;height:100%;gap:42px;max-width:1300px}
@@ -108,14 +112,33 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
 .card.breve .tag{color:#ffc9a6}
 
 /* fecho */
-.fim{background-image:linear-gradient(90deg,rgba(6,37,58,.94) 40%,rgba(6,37,58,.15) 80%),url(assets/conhecimento.jpg);background-size:auto,230%;background-position:0 0,88% 3%}
-.fim .txt{display:flex;flex-direction:column;justify-content:center;height:100%;max-width:860px}
-.fim h2{font-size:86px;font-weight:900;line-height:1.05;margin:22px 0 36px}
+.fim{background-image:linear-gradient(90deg,rgba(6,37,58,.94) 40%,rgba(6,37,58,.15) 80%),url(assets/conhecimento.jpg);background-size:auto,170%;background-position:0 0,100% 0}
+.fim .txt{display:flex;flex-direction:column;justify-content:center;height:100%;max-width:900px}
+.fim h2{font-size:86px;font-weight:900;line-height:1.05;margin:22px 0 36px;max-width:680px}
 .fim ul{list-style:none;display:flex;gap:44px;margin:0 0 40px;padding:0}
 .fim li{font-size:23px;line-height:1.25}
 .fim li b{display:block;font:900 72px/1 Montserrat,sans-serif;color:#ffc9a6;margin-bottom:6px}
 .marca{display:flex;align-items:center;gap:20px;font-weight:600}
 .marca img{height:62px;padding:6px 10px;border-radius:10px;background:#fff}
+
+/* dinâmica: QR no fecho; a seta troca o QR pelas duas nuvens */
+.qr{position:absolute;right:80px;bottom:84px;width:400px;padding:22px 26px 18px;border-radius:18px;background:#fff;color:var(--ink);text-align:center}
+.qr h3{font-size:27px;font-weight:800;line-height:1.15}
+.qr p{margin:6px 0 10px;font-size:19px;line-height:1.3;color:var(--muted)}
+.qr svg{display:block;width:250px;height:250px;margin:0 auto}
+.qr small{display:block;margin-top:8px;font:600 19px/1.2 Inter,sans-serif;color:#00713f}
+.nuvens{position:absolute;inset:0;z-index:2;display:grid;grid-template-columns:1fr 1fr;background:#06253a;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+[data-step="1"] .nuvens{opacity:1;visibility:visible}
+.painel{position:relative;padding:40px 30px 70px}
+.painel.forte{background:#0b4a33}
+.painel.fraco{background:#6b2d0c}
+.painel h2{font-size:46px;font-weight:900;line-height:1.1}
+.painel h2 i{font:500 24px/1 Inter,sans-serif;margin-left:10px;opacity:.8}
+.nuvem{position:relative;width:740px;height:680px;margin-top:14px}
+.palavra{position:absolute;transform:translate(-50%,-50%);padding:0;border:0;background:none;color:#fff;font-family:Montserrat,sans-serif;font-weight:800;line-height:1.1;white-space:nowrap;cursor:pointer;transition:left .7s,top .7s,font-size .7s}
+.palavra:hover,.palavra:focus-visible{outline:3px solid #ffc9a6;outline-offset:3px;border-radius:4px}
+.vazio{display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;text-align:center;opacity:.8}
+#aviso{position:absolute;left:50%;top:14px;transform:translateX(-50%);padding:6px 18px;border-radius:99px;background:var(--boia);color:#10202a;font-weight:600;font-size:20px;white-space:nowrap}
 
 /* progresso: a boia nada até a ilha */
 #mar{position:absolute;left:0;right:0;bottom:0;height:62px;z-index:20;pointer-events:none}
@@ -147,12 +170,20 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
     </svg>
     <div id="boia"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="#f26a21" stroke-width="9"/><circle cx="20" cy="20" r="14" fill="none" stroke="#fff" stroke-width="9" stroke-dasharray="9 13"/></svg></div>
   </div>
+  <nav id="nav" aria-label="Navegação da apresentação">
+    <button id="n-volta" type="button">← Voltar</button>
+    <button id="n-play" type="button" hidden>Pausar</button>
+    <span id="n-pos"></span>
+    <button id="n-avanca" type="button">Avançar →</button>
+  </nav>
   <div id="auto">Automático · A para parar</div>
   <div id="ajuda"><kbd>→</kbd> avança &nbsp; <kbd>←</kbd> volta &nbsp; <kbd>A</kbd> automático &nbsp; <kbd>1</kbd>–<kbd>5</kbd> ambientes &nbsp; <kbd>F</kbd> tela cheia &nbsp; <kbd>Esc</kbd> sai</div>
 </div>
 
 <script src="assets/parana.js"></script>
 <script src="assets/ecossistema.js"></script>
+<script src="assets/dinamica.js"></script>
+<script src="assets/qrcode.min.js"></script>
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -195,7 +226,7 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
   // 2. o vídeo; toca ao entrar e, no modo automático, avança quando termina
   SLIDES.push({
     c: '#000', classe: 'filme', video: true,
-    html: `<video id="filme" src="assets/video-camadas-parana.mp4" controls playsinline preload="metadata"></video>`,
+    html: `<video id="filme" src="assets/video-camadas-parana.mp4" controls controlslist="nofullscreen nodownload noremoteplayback" disablepictureinpicture playsinline preload="metadata"></video>`,
     aoEntrar: () => {
       ajuda.classList.add('off');
       filme().play().catch(() => {}); // sem permissão de som, os controles ficam à mão
@@ -247,7 +278,7 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
   });
   // 7. a ilha
   SLIDES.push({
-    c: '#06253a', classe: 'fim', tempo: 9000,
+    c: '#06253a', classe: 'fim', tempo: 9000, passos: 1,
     html: `<div class="txt"><div class="rule" data-a="left"></div>
       <h2 data-a="left" style="--d:.1s">Do dado à decisão, em todo o Paraná.</h2>
       <ul>
@@ -256,7 +287,13 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
         <li data-a="up" style="--d:.54s"><b>${noAr}</b>itens no ar</li>
         <li data-a="up" style="--d:.66s"><b>${todos.length - noAr}</b>em breve</li>
       </ul>
-      <div class="marca" data-a="up" style="--d:.8s"><img src="assets/logo-idr.webp" alt="IDR-Paraná"><span>Departamento de Planejamento<br>planejamento-idrparana.github.io</span></div></div>`,
+      <div class="marca" data-a="up" style="--d:.8s"><img src="assets/logo-idr.webp" alt="IDR-Paraná"><span>Departamento de Planejamento<br>planejamento-idrparana.github.io</span></div></div>
+      <aside class="qr" data-a="pop" style="--d:1s"><h3>Sua vez</h3><p>Um ponto forte e um ponto fraco do IDR</p><div id="qr"></div><small id="n-resp">Aponte a câmera do celular</small></aside>
+      <div class="nuvens">
+        <section class="painel forte"><h2>Pontos fortes<i id="t-forte"></i></h2><div class="nuvem" id="c-forte"></div></section>
+        <section class="painel fraco"><h2>Pontos fracos<i id="t-fraco"></i></h2><div class="nuvem" id="c-fraco"></div></section>
+        <div id="aviso" hidden>Sem conexão com as respostas, tentando de novo</div>
+      </div>`,
   });
 
   stage.insertAdjacentHTML('afterbegin', SLIDES.map(s => `<section class="slide ${s.classe || ''}" style="--c:${s.c}">${s.html}</section>`).join(''));
@@ -275,10 +312,100 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
     contagem = requestAnimationFrame(passo);
   }
 
+  // dinâmica: conta as respostas iguais (sem diferenciar caixa e acento) e desenha as nuvens
+  const CHAVE = s => s.trim().toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/\s+/g, ' ');
+  function conta(textos) {
+    const grupos = new Map();
+    textos.forEach(bruto => {
+      const k = CHAVE(bruto);
+      if (!grupos.has(k)) grupos.set(k, { k, n: 0, formas: {} });
+      const g = grupos.get(k), forma = bruto.trim().replace(/\s+/g, ' ');
+      g.n += 1;
+      g.formas[forma] = (g.formas[forma] || 0) + 1;
+    });
+    return [...grupos.values()]
+      .map(g => ({ k: g.k, n: g.n, texto: Object.entries(g.formas).sort((a, b) => b[1] - a[1])[0][0] }))
+      .sort((a, b) => b.n - a.n || a.k.localeCompare(b.k));
+  }
+  // posiciona do centro para fora em espiral; se não couber, tenta de novo com letras menores
+  const regua = document.createElement('canvas').getContext('2d');
+  function dispoe(itens, W, H) {
+    const max = itens[0].n;
+    for (const escala of [1, 0.85, 0.7, 0.58, 0.48, 0.4]) {
+      const postos = [];
+      const ok = itens.every(it => {
+        let tam = (26 + 62 * Math.sqrt(it.n / max)) * escala;
+        regua.font = `800 ${tam}px Montserrat, sans-serif`;
+        const larg0 = regua.measureText(it.texto).width + 12;
+        if (larg0 > W) tam *= W / larg0;
+        const w = Math.min(larg0, W), h = tam * 1.2;
+        for (let a = 0; a < 90; a += 0.2) {
+          const x = W / 2 + a * 7 * Math.cos(a), y = H / 2 + a * 2.6 * Math.sin(a);
+          const dentro = x - w / 2 >= 0 && x + w / 2 <= W && y - h / 2 >= 0 && y + h / 2 <= H;
+          if (dentro && !postos.some(o => Math.abs(o.x - x) < (o.w + w) / 2 + 6 && Math.abs(o.y - y) < (o.h + h) / 2 + 2)) {
+            postos.push({ ...it, x, y, w, h, tam });
+            return true;
+          }
+        }
+        return false;
+      });
+      if (ok) return postos;
+    }
+    return [];
+  }
+  const ocultas = new Set(); // quem apresenta pode tirar da tela uma resposta imprópria com um clique
+  function desenha(id, textos, total) {
+    const caixa = document.getElementById(id);
+    const itens = conta(textos).filter(i => !ocultas.has(i.k)).slice(0, 40);
+    document.getElementById(total).textContent = textos.length ? ` ${textos.length}` : '';
+    if (!itens.length) { caixa.innerHTML = '<div class="vazio">Aguardando respostas</div>'; return; }
+    caixa.querySelector('.vazio')?.remove();
+    const postos = dispoe(itens, 740, 680), atuais = new Map([...caixa.children].map(el => [el.dataset.k, el]));
+    postos.forEach(p => {
+      const el = atuais.get(p.k) || caixa.appendChild(Object.assign(document.createElement('button'), { className: 'palavra' }));
+      el.dataset.k = p.k; el.textContent = p.texto; el.title = `${p.n} · clique para ocultar`;
+      el.style.left = `${p.x}px`; el.style.top = `${p.y}px`; el.style.fontSize = `${p.tam}px`;
+      atuais.delete(p.k);
+    });
+    atuais.forEach(el => el.remove());
+  }
+  const SESSAO = DINAMICA.hoje();
+  let enqueteT = 0, ultima = [], ativa = false;
+  const redesenha = () => {
+    desenha('c-forte', ultima.map(r => r.forte), 't-forte');
+    desenha('c-fraco', ultima.map(r => r.fraco), 't-fraco');
+    const n = ultima.length;
+    document.getElementById('n-resp').textContent = n ? `${n} ${n === 1 ? 'resposta' : 'respostas'}` : 'Aponte a câmera do celular';
+  };
+  async function consulta() {
+    try {
+      const r = await fetch(`${DINAMICA.rest}?sessao=eq.${SESSAO}&select=forte,fraco&limit=2000`, { headers: DINAMICA.cabecalho });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const dados = await r.json();
+      if (!ativa) return;
+      document.getElementById('aviso').hidden = true;
+      ultima = dados; redesenha();
+    } catch {
+      document.getElementById('aviso').hidden = false;
+    }
+    if (ativa) enqueteT = setTimeout(consulta, 4000);
+  }
+  function enquete(ligar) {
+    if (ligar === ativa) return;
+    ativa = ligar; clearTimeout(enqueteT);
+    if (ativa) consulta();
+  }
+  const qr = qrcode(0, 'M');
+  qr.addData(`${DINAMICA.site}participar.html?s=${SESSAO}`);
+  qr.make();
+  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  redesenha();
+
   let i = -1, s = 0, trocaT = 0;
   const pinta = () => {
     const el = els[i];
     el.dataset.step = s;
+    enquete(i === els.length - 1);
     el.querySelectorAll('[data-a]').forEach(a => a.classList.toggle('in', s >= +(a.dataset.s || 0)));
     agenda();
   };
@@ -288,7 +415,8 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
       e.querySelectorAll('[data-a]').forEach(a => a.classList.remove('in'));
     });
     if (!filme().paused || filme().currentTime) { filme().pause(); filme().currentTime = 0; }
-    document.getElementById('mar').hidden = !!SLIDES[alvo].video;
+    document.getElementById('n-pos').textContent = `${alvo + 1} / ${els.length}`;
+    document.getElementById('n-play').hidden = !SLIDES[alvo].video;
     const el = els[alvo];
     el.classList.add('on');
     document.documentElement.style.setProperty('--bg', SLIDES[alvo].c);
@@ -343,17 +471,27 @@ a.card::after{content:"↗";position:absolute;right:22px;top:24px;font:700 30px/
     e.preventDefault();
     if (e.repeat) return;
     fn();
-  });
+  }, true); // captura: os controles do vídeo em foco não ficam com a tecla
   // toque ou clique: esquerda volta, o resto avança; links e botões seguem o próprio caminho
   stage.addEventListener('click', e => {
     const ir = e.target.closest('[data-ir]');
     if (ir) return vai(inicioDe[ir.dataset.ir]);
-    if (e.target.closest('a, video')) return;
+    const palavra = e.target.closest('.palavra');
+    if (palavra) { ocultas.add(palavra.dataset.k); return redesenha(); }
+    if (e.target.closest('video') && filme().ended) return avanca();
+    if (e.target.closest('a, video, #nav')) return;
     const r = stage.getBoundingClientRect();
     return (e.clientX - r.left) / r.width < 0.25 ? volta() : avanca();
   });
 
   filme().addEventListener('ended', () => { if (auto) avanca(); });
+  const alternaFilme = () => (filme().paused ? filme().play() : filme().pause());
+  const rotuloPlay = () => { document.getElementById('n-play').textContent = filme().paused ? 'Tocar' : 'Pausar'; };
+  filme().addEventListener('play', rotuloPlay);
+  filme().addEventListener('pause', rotuloPlay);
+  document.getElementById('n-volta').addEventListener('click', () => volta());
+  document.getElementById('n-avanca').addEventListener('click', () => avanca());
+  document.getElementById('n-play').addEventListener('click', alternaFilme);
 
   const ajusta = () => { stage.style.transform = `scale(${Math.min(innerWidth / 1600, innerHeight / 900)})`; };
   addEventListener('resize', ajusta);
