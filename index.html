@@ -233,6 +233,14 @@ footer a{color:#fff}
   });
   svg.addEventListener('pointerout', () => tip.style.opacity = 0);
 
+  // atalho oculto: 5 cliques seguidos no mapa abrem a apresentação
+  let cliques = 0, zera = 0;
+  svg.addEventListener('click', () => {
+    clearTimeout(zera);
+    zera = setTimeout(() => { cliques = 0; }, 1500);
+    if (++cliques === 5) location.href = 'apresentacao.html';
+  });
+
   // seções do ecossistema a partir de assets/ecossistema.js
   const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   const host = document.getElementById('secoes'), nav = document.getElementById('nav');
